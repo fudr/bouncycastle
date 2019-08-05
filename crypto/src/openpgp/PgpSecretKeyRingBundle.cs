@@ -53,12 +53,16 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 
 				if (pgpSecret == null)
 				{
-					throw new PgpException(obj.GetType().FullName + " found where PgpSecretKeyRing expected");
+					continue;
 				}
 
 				long key = pgpSecret.GetPublicKey().KeyId;
 				secretRings.Add(key, pgpSecret);
 				order.Add(key);
+			}
+			if(order.Count == 0)
+			{
+				throw new PgpException("No private key found");
 			}
         }
 
